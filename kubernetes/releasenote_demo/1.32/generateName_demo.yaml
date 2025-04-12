@@ -1,0 +1,21 @@
+# 参考: https://github.com/kubernetes/kubernetes/issues/44501#issuecomment-294255660
+# 下发资源
+# kubectl create -f generateName_demo.yaml
+# 查看资源的name(apiserver 根据generateName 自动生成)
+# kubectl get job 
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: tool-job-
+spec:
+  template:
+    spec:
+      containers:
+      - name: tool
+        image: "busybox"
+        command:
+        - sh
+        args:
+        - -c
+        - echo "hello, world"
+      restartPolicy: OnFailure
